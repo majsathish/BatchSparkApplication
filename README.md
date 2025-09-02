@@ -1,11 +1,11 @@
 # Modern Generic Spring Batch + Spark Hybrid Data Processing
 
-This application demonstrates a modern, configurable hybrid approach using **Java 24** and **Spring Boot 3.5.5** combining Spring Batch for ETL operations with Apache Spark for big data analytics. The system can process any CSV file based on configuration stored in Oracle database tables.
+This application demonstrates a modern, configurable hybrid approach using **Java 21** and **Spring Boot 3.3.5** combining Spring Batch for ETL operations with Apache Spark for big data analytics. The system can process any CSV file based on configuration stored in Oracle database tables.
 
 ## Modern Features
 
-- **Java 24**: Latest Java features including preview features and performance improvements
-- **Spring Boot 3.5.5**: Latest Spring Boot with enhanced performance and security
+- **Java 21**: LTS Java version with modern features and excellent performance
+- **Spring Boot 3.3.5**: Stable Spring Boot version with enhanced performance and security
 - **Modern Spring Batch**: New JobBuilder and StepBuilder APIs (no more deprecated factories)
 - **Jakarta EE**: Full migration from javax to jakarta namespace
 - **Generic Processing**: Configurable table and column mappings via database configuration
@@ -100,8 +100,8 @@ This application demonstrates a modern, configurable hybrid approach using **Jav
 ## Running the Application
 
 ### Prerequisites
-- **Java 24** (required for latest features)
-- **Maven 3.9+** (for Java 24 support)
+- **Java 21** (LTS version recommended for production)
+- **Maven 3.8+** (for Java 21 support)
 - **Oracle Database 19c+** (local installation or remote access)
 
 ### Steps
@@ -221,8 +221,8 @@ The Spark engine automatically generates:
 
 ## Modern Technology Stack
 
-- **Java 24** with preview features enabled
-- **Spring Boot 3.5.5** (latest version)
+- **Java 21** (LTS version for production stability)
+- **Spring Boot 3.3.5** (stable production version)
 - **Spring Batch 5.x** with modern JobBuilder/StepBuilder APIs
 - **Apache Spark 3.5.0** with enhanced performance
 - **Oracle JDBC 23c** (ojdbc11) driver
@@ -237,3 +237,12 @@ The Spark engine automatically generates:
 - **Better IDE Support**: Full IDE support for debugging, refactoring, and code navigation
 - **Explicit Code**: All methods are explicitly written for better maintainability
 - **No Magic**: No annotation processing or code generation - what you see is what you get
+- **Java 21 LTS**: Uses Long Term Support version for production stability and compatibility
+
+## Version Compatibility
+
+This project has been optimized for:
+- **Java 21 LTS**: Provides excellent performance and long-term support
+- **Spring Boot 3.3.5**: Stable production version with proven reliability
+- **Maven 3.8+**: Compatible with Java 21 and modern build practices
+- **Oracle Database 19c+**: Modern database features with excellent JDBC support

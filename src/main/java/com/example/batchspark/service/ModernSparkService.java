@@ -123,21 +123,15 @@ public class ModernSparkService {
         long distinctRows = dataDF.distinct().count();
         long duplicateRows = totalRows - distinctRows;
         
-        Dataset<Row> duplicateAnalysis = sparkSession.createDataFrame(
-            List.of(
-                sparkSession.sparkContext().parallelize(List.of(
-                    org.apache.spark.sql.RowFactory.create("total_rows", totalRows),
-                    org.apache.spark.sql.RowFactory.create("distinct_rows", distinctRows),
-                    org.apache.spark.sql.RowFactory.create("duplicate_rows", duplicateRows)
-                ), 1)
-            ).get(0),
-            org.apache.spark.sql.types.DataTypes.createStructType(
-                new org.apache.spark.sql.types.StructField[]{
-                    org.apache.spark.sql.types.DataTypes.createStructField("metric", org.apache.spark.sql.types.DataTypes.StringType, false),
-                    org.apache.spark.sql.types.DataTypes.createStructField("value", org.apache.spark.sql.types.DataTypes.LongType, false)
-                }
-            )
+        // Create duplicate analysis using SQL approach for better compatibility
+        String duplicateAnalysisQuery = String.format(
+            "SELECT 'total_rows' as metric, %d as value " +
+            "UNION ALL SELECT 'distinct_rows' as metric, %d as value " +
+            "UNION ALL SELECT 'duplicate_rows' as metric, %d as value",
+            totalRows, distinctRows, duplicateRows
         );
+        
+        Dataset<Row> duplicateAnalysis = sparkSession.sql(duplicateAnalysisQuery);
         
         duplicateAnalysis.coalesce(1)
                 .write()
@@ -223,16 +217,17 @@ public class ModernSparkService {
                 String table2 = tableNames.get(1).toLowerCase();
                 
                 // Create feature-rich dataset
-                Dataset<Row> featureDataset = sparkSession.sql(
-                    String.format("""
-                        SELECT 
-                            t1.*,
-                            t2.*,
-                            CASE WHEN t1.id IS NOT NULL AND t2.id IS NOT NULL THEN 1 ELSE 0 END as has_relationship
-                        FROM %s t1 
-                        FULL OUTER JOIN %s t2 ON t1.id = t2.id
-                        """, table1, table2)
+                String sqlQuery = String.format(
+                    "SELECT " +
+                    "    t1.*, " +
+                    "    t2.*, " +
+                    "    CASE WHEN t1.id IS NOT NULL AND t2.id IS NOT NULL THEN 1 ELSE 0 END as has_relationship " +
+                    "FROM %s t1 " +
+                    "FULL OUTER JOIN %s t2 ON t1.id = t2.id", 
+                    table1, table2
                 );
+                
+                Dataset<Row> featureDataset = sparkSession.sql(sqlQuery);
                 
                 featureDataset.coalesce(1)
                         .write()
