@@ -1,19 +1,21 @@
 spring:
   datasource:
-    url: jdbc:h2:mem:testdb
-    driver-class-name: org.h2.Driver
-    username: sa
-    password: password
-  
-  h2:
-    console:
-      enabled: true
+    url: jdbc:oracle:thin:@localhost:1521:XE
+    driver-class-name: oracle.jdbc.OracleDriver
+    username: ${DB_USERNAME:batch_user}
+    password: ${DB_PASSWORD:batch_password}
   
   jpa:
     hibernate:
-      ddl-auto: create-drop
-    show-sql: true
+      ddl-auto: validate
+    show-sql: false
+  
+  batch:
+    job:
+      enabled: false
 
 logging:
   level:
-    com.example.batchspark: DEBUG
+    com.example.batchspark: INFO
+    org.springframework.batch: WARN
+    org.apache.spark: ERROR

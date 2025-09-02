@@ -1,11 +1,15 @@
 # Modern Generic Spring Batch + Spark Hybrid Data Processing
 
-This application demonstrates a modern, configurable hybrid approach using **Java 21** and **Spring Boot 3.3.5** combining Spring Batch for ETL operations with Apache Spark for big data analytics. The system can process any CSV file based on configuration stored in Oracle database tables.
+This application demonstrates a modern, configurable hybrid approach using **Java 21** and **Spring Boot 3.5.5** combining Spring Batch for ETL operations with Apache Spark for big data analytics. The system can process any CSV file based on configuration stored in Oracle database tables.
 
 ## Modern Features
 
 - **Java 21**: LTS Java version with modern features and excellent performance
-- **Spring Boot 3.3.5**: Stable Spring Boot version with enhanced performance and security
+- **Spring Boot 3.5.5**: Latest Spring Boot version with cutting-edge features and performance improvements
+  - Enhanced observability and metrics
+  - Improved startup performance
+  - Advanced configuration management
+  - Better memory efficiency
 - **Modern Spring Batch**: New JobBuilder and StepBuilder APIs (no more deprecated factories)
 - **Jakarta EE**: Full migration from javax to jakarta namespace
 - **Generic Processing**: Configurable table and column mappings via database configuration
@@ -101,7 +105,7 @@ This application demonstrates a modern, configurable hybrid approach using **Jav
 
 ### Prerequisites
 - **Java 21** (LTS version recommended for production)
-- **Maven 3.8+** (for Java 21 support)
+- **Maven 3.9+** (required for Spring Boot 3.5.5 support)
 - **Oracle Database 19c+** (local installation or remote access)
 
 ### Steps
@@ -117,15 +121,25 @@ This application demonstrates a modern, configurable hybrid approach using **Jav
    cd batch-spark-demo
    ```
 
-3. **Update database connection** (if needed):
+3. **IDE Setup** (for proper @Component and SLF4J recognition):
+   ```bash
+   # Refresh Maven dependencies
+   mvn clean compile
+   
+   # For IntelliJ IDEA: File -> Reload Maven Projects
+   # For Eclipse: Right-click project -> Maven -> Reload Projects
+   # For VS Code: Reload Window (Ctrl+Shift+P -> "Developer: Reload Window")
+   ```
+
+4. **Update database connection** (if needed):
    Edit `src/main/resources/application.yml` with your Oracle connection details
 
-4. **Build the project**:
+5. **Build the project**:
    ```bash
    mvn clean compile
    ```
 
-5. **Run the application**:
+6. **Run the application**:
    ```bash
    mvn spring-boot:run
    ```
@@ -222,9 +236,9 @@ The Spark engine automatically generates:
 ## Modern Technology Stack
 
 - **Java 21** (LTS version for production stability)
-- **Spring Boot 3.3.5** (stable production version)
+- **Spring Boot 3.5.5** (latest version with modern features)
 - **Spring Batch 5.x** with modern JobBuilder/StepBuilder APIs
-- **Apache Spark 3.5.0** with enhanced performance
+- **Apache Spark 3.5.3** with enhanced performance and bug fixes
 - **Oracle JDBC 23c** (ojdbc11) driver
 - **Jakarta EE 10** (full migration from javax)
 - **HikariCP** latest connection pooling
@@ -239,10 +253,22 @@ The Spark engine automatically generates:
 - **No Magic**: No annotation processing or code generation - what you see is what you get
 - **Java 21 LTS**: Uses Long Term Support version for production stability and compatibility
 
+## Spring Boot 3.5.5 Enhancements
+
+- **Performance Improvements**: Faster startup times and reduced memory footprint
+- **Enhanced Observability**: Better metrics, tracing, and monitoring capabilities
+- **Security Updates**: Latest security patches and vulnerability fixes
+- **Configuration Management**: Improved configuration binding and validation
+- **Native Image Support**: Better GraalVM native image compilation support
+- **Dependency Updates**: Latest versions of all underlying frameworks and libraries
+
 ## Version Compatibility
 
 This project has been optimized for:
 - **Java 21 LTS**: Provides excellent performance and long-term support
-- **Spring Boot 3.3.5**: Stable production version with proven reliability
-- **Maven 3.8+**: Compatible with Java 21 and modern build practices
-- **Oracle Database 19c+**: Modern database features with excellent JDBC support
+- **Spring Boot 3.5.5**: Latest version with modern features and performance improvements
+- **Maven 3.9+**: Latest Maven version compatible with Java 21 and Spring Boot 3.5.5
+- **Apache Spark 3.5.3**: Latest stable Spark version with bug fixes and improvements
+- **Oracle Database 19c+**: Production-ready database with excellent JDBC support
+- **No Docker Dependencies**: Simplified deployment without containerization complexity
+- **No Test Database Dependencies**: Uses Oracle for all environments (no H2)

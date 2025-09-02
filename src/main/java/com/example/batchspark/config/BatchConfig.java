@@ -29,22 +29,28 @@ public class BatchConfig {
     
     @Bean
     public Job genericDataProcessingJob(JobRepository jobRepository, 
-                                      PlatformTransactionManager transactionManager) {
+                                      PlatformTransactionManager transactionManager,
+                                      GenericItemReader reader,
+                                      GenericItemProcessor processor,
+                                      GenericItemWriter writer) {
         return new JobBuilder("genericDataProcessingJob", jobRepository)
                 .incrementer(new RunIdIncrementer())
-                .start(loadDataStep(jobRepository, transactionManager))
+                .start(loadDataStep(jobRepository, transactionManager, reader, processor, writer))
                 .next(sparkAnalyticsStep(jobRepository, transactionManager))
                 .build();
     }
     
     @Bean
     public Step loadDataStep(JobRepository jobRepository, 
-                           PlatformTransactionManager transactionManager) {
+                           PlatformTransactionManager transactionManager,
+                           GenericItemReader reader,
+                           GenericItemProcessor processor,
+                           GenericItemWriter writer) {
         return new StepBuilder("loadDataStep", jobRepository)
                 .<GenericDataRecord, GenericDataRecord>chunk(100, transactionManager)
-                .reader(genericItemReader())
-                .processor(genericItemProcessor())
-                .writer(genericItemWriter())
+                .reader(reader)
+                .processor(processor)
+                .writer(writer)
                 .taskExecutor(taskExecutor())
                 .build();
     }
@@ -55,21 +61,6 @@ public class BatchConfig {
         return new StepBuilder("sparkAnalyticsStep", jobRepository)
                 .tasklet(sparkAnalyticsTasklet, transactionManager)
                 .build();
-    }
-    
-    @Bean
-    public GenericItemReader genericItemReader() {
-        return new GenericItemReader();
-    }
-    
-    @Bean
-    public GenericItemProcessor genericItemProcessor() {
-        return new GenericItemProcessor();
-    }
-    
-    @Bean
-    public GenericItemWriter genericItemWriter() {
-        return new GenericItemWriter();
     }
     
     @Bean

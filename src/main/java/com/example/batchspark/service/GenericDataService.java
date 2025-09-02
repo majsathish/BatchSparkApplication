@@ -64,7 +64,7 @@ public class GenericDataService {
     }
     
     @Transactional
-    public void insertBatch(List<GenericDataRecord> records, FileConfig fileConfig) {
+    public void insertBatch(List<? extends GenericDataRecord> records, FileConfig fileConfig) {
         if (records.isEmpty()) {
             return;
         }
