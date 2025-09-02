@@ -229,3 +229,11 @@ The Spark engine automatically generates:
 - **Jakarta EE 10** (full migration from javax)
 - **HikariCP** latest connection pooling
 - **Spring Boot Actuator** for monitoring and health checks
+- **No Lombok dependency** - Uses standard Java code for better IDE compatibility and debugging
+
+## Code Quality Features
+
+- **Standard Java Code**: All classes use standard Java getters, setters, and constructors instead of Lombok annotations
+- **Better IDE Support**: Full IDE support for debugging, refactoring, and code navigation
+- **Explicit Code**: All methods are explicitly written for better maintainability
+- **No Magic**: No annotation processing or code generation - what you see is what you get
