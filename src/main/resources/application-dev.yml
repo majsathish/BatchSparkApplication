@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: jdbc:oracle:thin:@localhost:1521:XE
+    username: batch_user
+    password: batch_password
+  
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+logging:
+  level:
+    com.example.batchspark: DEBUG
+    org.springframework.batch: DEBUG
+    oracle.jdbc: DEBUG

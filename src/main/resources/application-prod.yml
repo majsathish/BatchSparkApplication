@@ -1,0 +1,27 @@
+spring:
+  datasource:
+    url: ${DB_URL:jdbc:oracle:thin:@prod-oracle:1521:PROD}
+    username: ${DB_USERNAME:batch_user}
+    password: ${DB_PASSWORD:batch_password}
+    hikari:
+      maximum-pool-size: 50
+      minimum-idle: 10
+      connection-timeout: 60000
+      idle-timeout: 900000
+      max-lifetime: 3600000
+  
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+
+logging:
+  level:
+    com.example.batchspark: INFO
+    org.springframework.batch: INFO
+    oracle.jdbc: WARN
+    
+app:
+  spark:
+    master: spark://spark-master:7077
+    app-name: GenericDataProcessor-Prod
